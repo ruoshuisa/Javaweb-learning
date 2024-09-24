@@ -13,7 +13,7 @@ import java.io.IOException;
 public class RequestDemo6 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("requestDemo06被请求");
+        System.out.println("requestDemo06 被请求");
         resp.getWriter().write("RequestDemo06");
         req.setAttribute("msg", "hello");
 
