@@ -39,7 +39,7 @@
             top: 50%;
             left: 50%;
             width: 450px;
-            height: 350px;
+            height: 400px;
             margin-left: -225px;
             margin-top: -150px;
         }
@@ -146,6 +146,13 @@
         .icon-box i {
             flex: 0 0 33%;
         }
+
+        /* 验证码相关样式 */
+        .verify-code-wrap {
+            display: flex;
+            align-items: center;
+            margin-left: 63px;
+        }
     </style>
 </head>
 <body>
@@ -180,20 +187,18 @@
                 <input type="text" name="address" class="input-box" placeholder="请输入地址">
             </label>
         </div>
+        <!-- 验证码相关 -->
+        <div class="verify-code-wrap">
+            <img src="/verifyCode" alt="验证码" onclick="this.src='/verifyCode?'+new Date().getTime()">
+            <label>
+                <input type="text" name="verifyCode" class="input-box" placeholder="请输入验证码" style="width: 90%">
+            </label>
+        </div>
         <div>
             <label>
                 <input type="submit" value="立即注册" class="btn">
             </label>
         </div>
-<!--        <div class="line-box">-->
-<!--            <span class="line"></span>-->
-<!--            <span class="line"></span>-->
-<!--        </div>-->
-<!--        <div class="icon-box">-->
-<!--            <i class="iconfont" style="color: rgb(81, 195, 50)">&#xe600;</i>-->
-<!--            <i class="iconfont" style="color: rgb(48, 165, 221)">&#xe73e;</i>-->
-<!--            <i class="iconfont" style="color: rgb(230, 23, 45)">&#xe636;</i>-->
-<!--        </div>-->
     </form>
 </div>
 </body>

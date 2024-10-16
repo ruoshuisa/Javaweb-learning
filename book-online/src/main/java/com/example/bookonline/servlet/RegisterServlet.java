@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 import java.io.IOException;
@@ -23,6 +24,13 @@ public class RegisterServlet extends HttpServlet {
         String nickname = req.getParameter("nickname");
         String avatar = req.getParameter("avatar");
         String address = req.getParameter("address");
+        String enteredCode = req.getParameter("verifyCode");
+
+        HttpSession session = req.getSession();
+        String correctCode = (String) session.getAttribute("verifyCode");
+        System.out.println("验证码" + correctCode);
+
+
 
         if (userDao.isUserExists(account)) {
             resp.setContentType("text/html;charset=utf-8");
@@ -30,21 +38,43 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(password);
-        user.setNickname(nickname);
-        user.setAvatar(avatar);
-        user.setAddress(address);
+//        User user = new User();
+//        user.setAccount(account);
+//        user.setPassword(password);
+//        user.setNickname(nickname);
+//        user.setAvatar(avatar);
+//        user.setAddress(address);
+//
+//        int result = userDao.insertUser(user);
+//
+//        if (result > 0) {
+//            resp.setContentType("text/html;charset=utf-8");
+//            resp.getWriter().write("<script>alert('注册成功');location.href='/';</script>");
+//        } else {
+//            resp.setContentType("text/html;charset=utf-8");
+//            resp.getWriter().write("<script>alert('注册失败');location.href='/register';</script>");
+//        }
 
-        int result = userDao.insertUser(user);
+        if (correctCode!= null && correctCode.equals(enteredCode)) {
+            User user = new User();
+            user.setAccount(account);
+            user.setPassword(password);
+            user.setNickname(nickname);
+            user.setAvatar(avatar);
+            user.setAddress(address);
 
-        if (result > 0) {
-            resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().write("<script>alert('注册成功');location.href='/';</script>");
+            int result = userDao.insertUser(user);
+
+            if (result > 0) {
+                resp.setContentType("text/html;charset=utf-8");
+                resp.getWriter().write("<script>alert('注册成功');location.href='/';</script>");
+            } else {
+                resp.setContentType("text/html;charset=utf-8");
+                resp.getWriter().write("<script>alert('注册失败');location.href='/register';</script>");
+            }
         } else {
             resp.setContentType("text/html;charset=utf-8");
-            resp.getWriter().write("<script>alert('注册失败');location.href='/register';</script>");
+            resp.getWriter().write("<script>alert('验证码错误');location.href='/register';</script>");
         }
     }
 
